@@ -1,0 +1,8 @@
+ClockworkProxyNativeService                                             u:object_r:clockwork_proxy_service:s0
+com.google.android.clockwork.home.proxy.IClockworkProxyNativeService    u:object_r:clockwork_proxy_native_service:s0
+dream_ambient                                                           u:object_r:system_app_service:s0
+activity_ambient                                                        u:object_r:system_app_service:s0
+ThermalObserver                                                         u:object_r:ThermalObserver_service:s0
+WearConnectivityService                                                 u:object_r:WearConnectivityService_service:s0
+WearDisplayService                                                      u:object_r:WearDisplayService_service:s0
+WearLeftyService                                                        u:object_r:WearLeftyService_service:s0

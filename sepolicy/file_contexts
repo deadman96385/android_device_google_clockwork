@@ -1,0 +1,8 @@
+/system/bin/sysproxyd    u:object_r:sysproxyd_exec:s0
+/system/bin/sysproxy     u:object_r:sysproxy_exec:s0
+
+/system/bin/setup_fs     u:object_r:setup_fs_exec:s0
+
+/data/system/time(/.*)?  u:object_r:system_time_data_file:s0
+
+/system/bin/ClockworkProxy      u:object_r:clockwork_proxy_exec:s0

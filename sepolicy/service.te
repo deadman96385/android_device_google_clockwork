@@ -1,0 +1,6 @@
+type clockwork_proxy_service,      service_manager_type;
+type clockwork_proxy_native_service, system_server_service, service_manager_type;
+type ThermalObserver_service, system_server_service, service_manager_type;
+type WearConnectivityService_service, system_server_service, service_manager_type;
+type WearDisplayService_service, system_server_service, service_manager_type;
+type WearLeftyService_service, system_server_service, service_manager_type;

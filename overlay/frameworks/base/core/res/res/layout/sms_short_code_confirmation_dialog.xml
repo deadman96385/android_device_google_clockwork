@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/parentPanel"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginLeft="8dip"
+    android:layout_marginRight="8dip"
+    android:orientation="vertical">
+    <ScrollView
+        android:id="@+id/scrolling_container"
+        android:overScrollMode="never"
+        android:scrollbars="none"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <TextView android:id="@+id/sms_short_code_confirm_message"
+                style="?android:attr/textAppearanceMedium"
+                android:textColor="@android:color/black"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingLeft="20dip"
+                android:paddingRight="20dip"
+                android:paddingTop="16dip"
+                android:paddingBottom="16dip" />
+
+            <TableLayout android:id="@+id/sms_short_code_detail_layout"
+                android:shrinkColumns="1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingLeft="16dip"
+                android:paddingRight="16dip">
+
+                <TableRow
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" >
+
+                    <ImageView android:id="@+id/sms_short_code_coins_icon"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:paddingLeft="8dip"
+                        android:paddingRight="8dip"
+                        android:src="@drawable/ic_coins_l" />
+                    <TextView android:id="@+id/sms_short_code_detail_message"
+                        android:textColor="@android:color/black"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content" />
+                </TableRow>
+
+                <TableRow
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" >
+                    <RelativeLayout android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:paddingTop="12dip"
+                        android:paddingLeft="8dip" >
+                    <CheckBox android:id="@+id/sms_short_code_remember_choice_checkbox"
+                        android:paddingTop="11dip"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="@android:color/black"
+                        android:buttonTint="@android:color/black" />
+                    </RelativeLayout>
+                    <TextView android:id="@+id/sms_short_code_remember_choice_text"
+                        android:textColor="@android:color/black"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:paddingTop="18dip"
+                        android:text="@string/sms_short_code_remember_choice" />
+                </TableRow>
+
+                <TableRow
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" >
+
+                    <Space android:layout_gravity="fill" />
+                    <TextView android:id="@+id/sms_short_code_remember_undo_instruction"
+                        android:textColor="@android:color/black"
+                        android:paddingTop="10dip"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+                </TableRow>
+
+            </TableLayout>
+        </LinearLayout>
+    </ScrollView>
+
+</LinearLayout>

@@ -1,0 +1,17 @@
+type setup_fs, domain;
+type setup_fs_exec, file_type, exec_type;
+
+init_daemon_domain(setup_fs)
+
+allow setup_fs self:capability sys_boot;
+
+# Look in the /dev/block directory
+allow setup_fs block_device:dir search;
+allow setup_fs cache_block_device:blk_file rw_file_perms;
+allow setup_fs userdata_block_device:blk_file rw_file_perms;
+
+# Allow execute on /system/bin/make_ext4fs
+allow setup_fs system_file:file rx_file_perms;
+
+# Allow rw on /proc/sysrq-trigger
+allow setup_fs proc_sysrq:file rw_file_perms;

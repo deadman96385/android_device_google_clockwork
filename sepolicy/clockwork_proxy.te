@@ -1,0 +1,35 @@
+type clockwork_proxy, domain;
+type clockwork_proxy_exec, file_type, exec_type;
+
+init_daemon_domain(clockwork_proxy)
+
+binder_service(clockwork_proxy)
+binder_use(clockwork_proxy)
+
+binder_call(clockwork_proxy, system_server)
+
+net_domain(clockwork_proxy)
+
+allowxperm clockwork_proxy self:udp_socket ioctl { SIOCSIFFLAGS SIOCSIFADDR SIOCSIFNETMASK };
+
+# net_bind_service allows us to bind to port 53 (DNS).
+allow clockwork_proxy self:capability { net_admin net_raw net_bind_service };
+allow clockwork_proxy self:netlink_route_socket { setopt nlmsg_write read bind create nlmsg_read write getattr };
+
+allow clockwork_proxy permission_service:service_manager find;
+
+# Allows shell to execute
+allow clockwork_proxy shell_exec:file rx_file_perms;
+
+# Allows /system/bin/iptables to execute
+allow clockwork_proxy system_file:file rx_file_perms;
+
+allow clockwork_proxy clockwork_proxy_service:service_manager add;
+allow clockwork_proxy net_data_file:dir search;
+allow clockwork_proxy net_data_file:file r_file_perms;
+
+allow priv_app clockwork_proxy_service:service_manager find;
+allow clockwork_proxy toolbox_exec:file getattr;
+allow clockwork_proxy toolbox_exec:file execute;
+allow clockwork_proxy toolbox_exec:file { open read };
+allow clockwork_proxy toolbox_exec:file execute_no_trans;

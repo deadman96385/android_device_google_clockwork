@@ -1,0 +1,34 @@
+type sysproxy_exec, file_type, exec_type;
+type sysproxyd_exec, file_type, exec_type;
+
+type sysproxyd, domain;
+
+init_daemon_domain(sysproxyd);
+net_domain(sysproxyd);
+
+# Binder is used when calling permission service.
+binder_use(sysproxyd);
+binder_call(sysproxyd, system_server);
+
+allow sysproxyd self:capability { net_admin net_raw net_bind_service };
+allow sysproxyd self:netlink_route_socket { setopt nlmsg_write read bind create nlmsg_read write getattr };
+
+allowxperm sysproxyd self:udp_socket ioctl { SIOCSIFFLAGS SIOCSIFADDR SIOCSIFNETMASK };
+
+# Allow sysproxyd to receive and operate on Bluetooth file descriptors.
+allow sysproxyd bluetooth:fd use;
+allow sysproxyd bluetooth:unix_stream_socket { read write };
+
+# Allow sysproxyd to execl sysproxy.
+allow sysproxyd sysproxy_exec:file rx_file_perms;
+
+# Allow executing shell and other system binaries, e.g. toolbox (ifconfig), iptables.
+allow sysproxyd toolbox_exec:file rx_file_perms;
+allow sysproxyd shell_exec:file rx_file_perms;
+allow sysproxyd system_file:file rx_file_perms;
+
+# Allow sysproxyd to call permission service to get package names.
+allow sysproxyd permission_service:service_manager find;
+
+# Required to find onwer UID for a given TCP socket.
+r_dir_file(sysproxyd, proc_net);

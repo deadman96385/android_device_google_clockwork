@@ -1,0 +1,1 @@
+get_prop(logd, clockwork_log_prop)

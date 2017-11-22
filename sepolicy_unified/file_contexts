@@ -1,0 +1,9 @@
+###################################
+# System files
+#
+/system/bin/init\.unified\.sh                   u:object_r:init-unified_exec:s0
+
+###################################
+# data files
+#
+/data/oem(/.*)?                                            u:object_r:oem_data_file:s0

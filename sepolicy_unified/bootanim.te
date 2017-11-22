@@ -1,0 +1,5 @@
+allow bootanim oem_data_file:dir search;
+allow bootanim oem_data_file:file r_file_perms;
+
+# Allow symlinks so different SKUs can have different boot animations. See b/36491344
+allow bootanim oem_data_file:lnk_file r_file_perms;

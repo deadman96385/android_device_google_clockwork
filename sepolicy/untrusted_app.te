@@ -1,0 +1,6 @@
+# HACK HACK HACK
+# ClockworkHome is an untrusted app and it manages the lifecycle of
+# the proxy service. As a result, it needs the following permission.
+# In the future, we should have system_server manage the lifecycle.
+# http://b/22323883
+allow untrusted_app clockwork_proxy_service:service_manager find;

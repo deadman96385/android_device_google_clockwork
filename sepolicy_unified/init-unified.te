@@ -1,0 +1,21 @@
+# init-unified service
+type init-unified, domain;
+type init-unified_exec, exec_type, file_type;
+
+# Started by init
+init_daemon_domain(init-unified)
+
+# shell and toolbox
+allow init-unified shell_exec:file rx_file_perms;
+allow init-unified toolbox_exec:file rx_file_perms;
+
+# read, write and create files and directories at /data/oem
+allow init-unified oem_data_file:dir create_dir_perms;
+allow init-unified oem_data_file:file create_file_perms;
+allow init-unified oem_data_file:lnk_file create_file_perms;
+allow init-unified unlabeled:dir search;
+
+# read files and directories at /oem
+allow init-unified oemfs:dir r_dir_perms;
+allow init-unified oemfs:file r_file_perms;
+allow init-unified oemfs:lnk_file r_file_perms;

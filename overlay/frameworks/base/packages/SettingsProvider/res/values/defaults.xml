@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+/**
+ * Copyright (c) 2014, The Android Open Source Project
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+-->
+<resources>
+    <!-- 30s default timeout: this is set lower in Home only -->
+    <integer name="def_screen_off_timeout">30000</integer>
+
+    <!-- disable the lockscreen -->
+    <bool name="def_lockscreen_disabled">false</bool>
+
+    <!-- Do not enable auto rotation switching. -->
+    <bool name="def_accelerometer_rotation">false</bool>
+
+    <!-- Default for UI touch sounds enabled -->
+    <bool name="def_sound_effects_enabled">false</bool>
+
+    <!-- user interface sound effects -->
+    <integer name="def_power_sounds_enabled">0</integer>
+    <integer name="def_lockscreen_sounds_enabled">0</integer>
+    <integer name="def_dock_sounds_enabled">0</integer>
+    <integer name="def_dock_sounds_enabled_when_accessibility">1</integer>
+
+    <!-- Default to using device only even on devices without GPS to allow apps to detect when location is enabled for FLP. -->
+    <string name="def_location_providers_allowed" translatable="false">gps</string>
+
+    <!-- Disabled HFP client profile by default. note that this is a string since it represents a long type bitmask-->
+    <string name="def_bluetooth_disabled_profiles">65536</string>
+
+    <!-- Enable "speak password" accessibility function by default. -->
+    <bool name="def_accessibility_speak_password">true</bool>
+
+    <!-- Disable automatic time and time zone. Clockwork has its own implementation. -->
+    <bool name="def_auto_time">false</bool>
+    <bool name="def_auto_time_zone">false</bool>
+</resources>

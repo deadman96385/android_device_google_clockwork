@@ -1,0 +1,11 @@
+<resources>
+    <string name="permlab_receiveSms">"接收短信"</string>
+    <string name="permlab_readSms">"读取短信"</string>
+    <string name="permlab_sendSms">"发送短信"</string>
+    <string name="permlab_callPhone">"拨打电话"</string>
+    <string name="permlab_readCallLog">"读取通话记录"</string>
+    <string name="permlab_writeCallLog">"新建/修改/删除通话记录"</string>
+    <string name="permlab_readPhoneState">"读取本机识别码"</string>
+    <string name="permlab_readContacts">"读取联系人"</string>
+    <string name="permlab_writeContacts">"新建/修改/删除联系人"</string>
+</resources>

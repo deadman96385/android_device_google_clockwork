@@ -1,0 +1,1 @@
+allow recovery ctl_adbd_prop:property_service set;

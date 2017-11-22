@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Flag indicating if SIM state should be checked before making an outgoing call. -->
+    <bool name="config_checkSimStateBeforeOutgoingCall">true</bool>
+    <!-- Package name for the SIM unlock dialog.[DO NOT TRANSLATE] -->
+    <string name="config_simUnlockUiPackage" translatable="false">com.google.android.apps.wearable.settings</string>
+    <!-- Class name for the SIM unlock dialog.[DO NOT TRANSLATE] -->
+    <string name="config_simUnlockUiClass" translatable="false">com.google.android.clockwork.settings.cellular.SimLockedDialog</string>
+
+    <!-- Flag indicating whether we should allow visual voicemail. Not available on wear -->
+    <bool name="allow_visual_voicemail">false</bool>
+
+    <!-- Custom component for handling voicemail notifications -->
+    <string name="config_customVoicemailComponent" translatable="false">com.google.android.apps.wearable.phone/com.google.android.clockwork.phone.notification.NotificationReceiver</string>
+
+    <!-- Package name for the network operator settings [DO NOT TRANSLATE] -->
+    <string name="network_operator_settings_package" translatable="false">com.google.android.apps.wearable.settings</string>
+    <!-- Class name for the network operator settings activity [DO NOT TRANSLATE] -->
+    <string name="network_operator_settings_class" translatable="false">com.google.android.clockwork.settings.cellular.NetworkOperatorsActivity</string>
+
+    <!-- Flag indicating whether the the emergency phone account should be emergency calls only -->
+    <bool name="config_emergency_account_emergency_calls_only">true</bool>
+
+    <!-- Whether the cellular radio is allowed to be power down when the Bluetooth can provide the data/call capabilities -->
+    <bool name="config_allowRadioPowerDownOnBluetooth">true</bool>
+</resources>

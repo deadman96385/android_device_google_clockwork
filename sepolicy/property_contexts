@@ -1,0 +1,10 @@
+ctl.adbd    u:object_r:ctl_adbd_prop:s0
+
+log.tag.WearableService     u:object_r:clockwork_log_prop:s0
+log.tag.rpcs                u:object_r:clockwork_log_prop:s0
+log.tag.rpctransport        u:object_r:clockwork_log_prop:s0
+log.tag.MicReader           u:object_r:clockwork_log_prop:s0
+log.tag.SearchClient        u:object_r:clockwork_log_prop:s0
+log.tag.voicelatency        u:object_r:clockwork_log_prop:s0
+log.tag.voicelatencyutil    u:object_r:clockwork_log_prop:s0
+log.tag.VoiceLatencyLogger  u:object_r:clockwork_log_prop:s0

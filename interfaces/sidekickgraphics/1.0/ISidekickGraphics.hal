@@ -1,0 +1,317 @@
+/*
+ * Copyright (C) 2016 The Android Open Source Project
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+package vendor.google_clockwork.sidekickgraphics@1.0;
+
+/**
+ * ISidekickGraphics is an interface that tells a Sidekick chip (small
+ * compute resource) how to control and animate the display while the AP
+ * is asleep.
+ */
+
+interface ISidekickGraphics {
+
+    /**
+     * Clears all graphics state. May be called any time. No errors are
+     * expected. If Sidekick was controlling the display, it will stop.
+     * May cause visual artifacts if called while Sidekick has
+     * control of the display.
+     *
+     * @return Status OK, or UNKNOWN_ERROR if the HAL is unusable
+     */
+    reset() generates (Status status);
+
+    /**
+     * Get the capability vector for graphics offload
+     *
+     * @return status OK, or UNKNOWN_ERROR if the HAL is unusable
+     * @return capabilities A Capability bitfield that tells what the SCR
+     *                      can do (e.g. rotate bitmaps).
+     * @return colorInfo A ColorSpace struct that describes the available
+     *                   depth and number of colors.
+     * @return bytesAvailable The amount of memory, in bytes, available
+     *                        for resources.
+     */
+    getCapabilities() generates (Status status,
+                                 bitfield<Capability> capabilities,
+                                 ColorCapability colorInfo,
+                                 uint32_t bytesAvailable);
+
+    /**
+     * Sets the ALS mode
+     *
+     * @param mode Specifies the desired mode.
+     * @param brightenAlpha Used to smooth the calculated light level
+     *        by exponential averaging, when ALS sensor is higher than
+     *        current light level
+     * @param dimmingAlpha Used to smooth the calculated light level
+     *        by exponential averaging, when ALS sensor is lower than
+     *        current light level
+     * @return status OK, or UNSUPPORTED_OPERATION if the HAL doesn't
+     *      support this, or BAD_VALUE if an incorrect mode is given.
+     */
+    setAlsMode(AlsMode mode, float brightenAlpha, float dimmingAlpha)
+               generates (Status status);
+
+    /**
+     * Configures ALS lux levels. To turn ALS on or off, use setAlsMode.
+     * This must be called before setAlsMode(ON) is called.
+     *
+     * @param thresholds Specifies the ALS-sensor thresholds to change
+     *            brightness level.
+     * @param levels Specifies the brightness level in lux. There must
+     *            be one more level than threshold.
+     * @return status OK, or UNSUPPORTED_OPERATION if the HAL doesn't
+     *      support this, or BAD_VALUE if an incorrect parameter is given.
+     */
+    configureAlsLevels(bool brightnessIsDiscrete, vec<uint16_t> lightValues,
+                       vec<uint16_t> lightValuesDown,
+		       vec<uint16_t> brightnessValues)
+            generates (Status status);
+
+    /**
+     * Configures ALS palettes. To turn ALS on or off, use setAlsMode.
+     *
+     * @param thresholds Specifies the ALS-sensor thresholds to change
+     *            palette.
+     * @param palettes Specifies the palette to use below a certain threshold.
+     *            There must be the same number of palettes as thresholds.
+     *            Each palette must be the size specified in
+     *            ColorCapability. (HIDL doesn't support vec<vec<>> in Java.)
+     * @return status OK, or UNSUPPORTED_OPERATION if the HAL doesn't
+     *      support this, or BAD_VALUE if an incorrect parameter is given.
+     */
+    configureAlsPalettes(vec<uint16_t> thresholds, Palette palettes)
+            generates (Status status);
+
+    /**
+     * Sets the Burnin mode
+     *
+     * @param mode Specifies the desired mode.
+     * @return status OK, or UNSUPPORTED_OPERATION if the HAL doesn't
+     *      support this, or BAD_VALUE if an incorrect mode is given.
+     */
+    setBurnInMode(BurnInMode mode) generates (Status status);
+
+
+    /**
+     * Gives information about most recent brightness and ALS values.
+     * May be called at any time and will return any available information.
+     *
+     * @return status OK (other cases may be defined later).
+     * @return light Smoothed value of the ALS sensor.
+     * @return brightness The most recent brightness commanded to the panel.
+     *             If no display has occurred, the value is meaningless.
+     */
+    getLastBrightness() generates
+                     (Status status, uint16_t alsValue, uint16_t brightness);
+
+    /**
+     * Gets the min, max, and average time taken by Sidekick to calculate
+     * frames. Resets the counters when called.
+     *
+     * @return status OK, or INSUFFICIENT_RESOURCE if no frames have been
+     *           rendered.
+     * @return minMs The minimum milliseconds to render a frame.
+     * @return maxMs The maximum milliseconds to render a frame.
+     * @return averageMs The average (mean) milliseconds to render a frame.
+     */
+    getTimePerFrame() generates (Status status, float minMs, float maxMs,
+                                 float averageMs);
+
+    /**
+     * Sets the desired frames per second. If this is not called, or is
+     * larger than what Sidekick can deliver, then Sidekick
+     * must do something reasonable and/or best-effort.
+     *
+     * @param fps Desired frames per second.
+     *
+     * @return status OK, or INSUFFICIENT_RESOURCE if the HAL knows it can't
+     *                deliver the desired FPS.
+     */
+    setDesiredFps(uint32_t fps) generates (Status status);
+
+    /**
+     * Sets the palette
+     *
+     * @param palette Maps from (implicit) index to color value
+     *
+     * @return status OK, or BAD_VALUE if the palette is invalid (e.g. too
+     *                many entries)
+     */
+    setPalette(Palette palette) generates (Status status);
+
+    /**
+     * Begins a resource download sequence
+     *
+     * @param replaceFrom Replaces resources after the given
+     *                    ResourceId (0 to replace all).
+     *
+     * @return status OK, or BAD_VALUE in case of invalid ResourceId,
+     *                    or UNSUPPORTED_OPERATION if called out of order
+     */
+    beginResources(ResourceId replaceFrom) generates (Status status);
+
+    /**
+     * Ends a resource download sequence
+     *
+     * @return status OK, or UNSUPPORTED_OPERATION if called out of order
+     */
+    endResources() generates (Status status);
+
+    /**
+     * Returns memory remaining
+     *
+     * @return bytesAvailable memory available
+     */
+    getBytesAvailable() generates (uint32_t bytesAvailable);
+
+    /**
+     * Begins Sidekick control of the display
+     *
+     * @param power The power setting of the display
+     *
+     * @return status OK, or INSUFFICIENT_RESOURCE if Sidekick can only display
+     *                at fewer frames per second than requested by
+     *                setDesiredFps(), or UNSUPPORTED_OPERATION if Sidekick
+     *                cannot display without visible artifacts e.g. tearing.
+     */
+    beginDisplay(DisplayPowerState power) generates (Status status);
+
+    /**
+     * Ends Sidekick control of the display. HAL must always accept this
+     * command.
+     *
+     * @param power The next power setting, in case this HAL needs to do
+     *           something to configure the panel.
+     *
+     */
+    endDisplay(DisplayPowerState power);
+
+    /**
+     * Supplies a bitmap
+     *
+     * @param drawableInfo How to put this resource on-screen
+     * @param bitmap An image
+     *
+     * @return status OK, or UNSUPPORTED_OPERATION if this Sidekick does
+     *                not handle bitmaps, or BAD_VALUE if the bitmap is
+     *                not a valid type 6 PNG file, or INSUFFICIENT_RESOURCE
+     *                if there is not enough memory to store this resource.
+     * @return resourceId Opaque ID needed in future commands
+     * @return bytesUsed The amount of memory, in bytes, used by this
+     *             resource.
+     */
+    sendBitmapPng8888(DrawableInfo drawableInfo, BitmapPng8888 bitmap)
+           generates (Status status, ResourceId resourceId,
+                      uint32_t bytesUsed);
+
+    /**
+     * Supplies a font (vertical strip of images)
+     *
+     * @param fontInfo How to interpret this resource as a font
+     * @param bitmap An image containing a vertical strip of tiles
+     *
+     * @return status OK, or UNSUPPORTED_OPERATION if this Sidekick does
+     *                not handle bitmaps or fonts, or BAD_VALUE if the
+     *                bitmap is not a valid type 6 PNG file,
+     *                or INSUFFICIENT_RESOURCE
+     *                if there is not enough memory to store this resource.
+     * @return resourceId Opaque ID needed in future commands
+     * @return bytesUsed The amount of memory, in bytes, used by this
+     *             resource.
+
+     */
+    sendFontPng8888(FontInfo fontInfo, BitmapPng8888 bitmap)
+           generates (Status status, ResourceId resourceId,
+                      uint32_t bytesUsed);
+
+    /**
+     * Sends instructions to draw a number on screen
+     *
+     * @param drawableInfo How to put this resource on-screen
+     * @param numberInfo How to draw the number
+     *
+     * @return status OK, or UNSUPPORTED_OPERATION if this Sidekick does
+     *                not handle number display, or BAD_VALUE if a value is
+     *                invalid (e.g. bad ResourceId), or INSUFFICIENT_RESOURCE
+     *                if there is not enough memory to store this resource.
+     * @return resourceId Opaque ID needed in future commands
+     * @return bytesUsed The amount of memory, in bytes, used by this resource.
+     */
+    sendNumberResource(DrawableInfo drawableInfo, NumberInfo numberInfo)
+            generates (Status status, ResourceId resourceId,
+                       uint32_t bytesUsed);
+
+
+    /**
+     * Modifies the DrawableInfo for the given resource.
+     *
+     * @param id The ResourceId to modify
+     * @param info The new DrawableInfo
+     *
+     * @return status OK, or UNSUPPORTED_OPERATION if this Sidekick does
+     *                not support a configured feature (e.g. bitmap rotation),
+     *                or BAD_VALUE if a value is invalid (e.g. bad ResourceId).
+     */
+    replaceDrawableInfo(ResourceId id, DrawableInfo info)
+             generates (Status status);
+
+    /**
+     * Sets a gamma level
+     *
+     * @param gamma The gamma level
+     *
+     * @return status OK, or UNSUPPORTED_OPERATION if this Sidekick does
+     *           not support gamma.
+     */
+    setGamma(float gamma) generates (Status status);
+
+    /**
+     * Sets the time for Sidekick to use in display
+     *
+     * @param time The current time at the moment the function is called
+     *
+     * HAL must always accept this command.
+     */
+    setDisplayTime(Time time);
+
+    /**
+     * Allows the HAL to control the display time (reverts to real time)
+     *
+     * HAL must always accept this command.
+     */
+    unsetDisplayTime();
+
+    /**
+     * Gets the last time displayed by Sidekick
+     *
+     * @return status OK, or INSUFFICIENT_RESOURCE if no time has been
+     *                displayed yet.
+     * @return time The last time displayed on-screen
+     */
+    getLastDisplayedTime() generates (Status status, Time time);
+
+    /**
+     * Enters Traditional Watch Mode.  Can only be cancelled by reset() or
+     * endDisplay().  getLastDisplayedTime() and getBrightness() can be called,
+     * and may return either useful values or UNSUPPORTED_OPERATION.
+     *
+     * @return status OK, or INSUFFICIENT_RESOURCE if resources are not
+     *                configured for TWM.
+     */
+    enterTwm() generates (Status status);
+};

@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- These are configurations that should exist on Google's own Nexus and GPe devices. -->
+<config>
+    <allow-in-power-save package="com.google.android.gms" />
+    <allow-in-power-save package="com.google.android.wearable.ambient" />
+    <allow-in-power-save package="com.google.android.apps.wearable.cellbroadcast" />
+
+    <allow-in-power-save-except-idle package="com.android.vending" />
+
+    <!--START entries copied from vendor/google/data/etc/sysconfig/google.xml-->
+
+    <!-- Certain broadcasts must still go to legacy implicit receivers -->
+    <allow-implicit-broadcast action="com.google.android.checkin.CHECKIN_COMPLETE" />
+    <allow-implicit-broadcast action="com.google.gservices.intent.action.GSERVICES_CHANGED" />
+    <allow-implicit-broadcast action="com.google.gservices.intent.action.GSERVICES_OVERRIDE" />
+    <allow-implicit-broadcast action="com.google.android.c2dm.intent.RECEIVE" />
+    <!-- TODO: This is a temporary workaround for allowing GmsCore to receive this broadcast.
+         This can be removed once OneTimeInitializer functionality is moved to GmsCore. -->
+    <allow-implicit-broadcast action="com.google.android.onetimeinitializer.ONE_TIME_INITIALIZED" />
+
+    <!--END entries copied from vendor/google/data/etc/sysconfig/google.xml-->
+</config>
+

@@ -1,0 +1,2 @@
+# Read files on /oem.
+r_dir_file(recovery, oem_data_file);

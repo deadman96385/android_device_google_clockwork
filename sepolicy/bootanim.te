@@ -1,0 +1,2 @@
+# System file accesses.
+r_dir_file(bootanim, { system_data_file system_time_data_file })

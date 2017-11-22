@@ -1,0 +1,7 @@
+<resources>
+    <!-- This is the package name for the default watch face. -->
+    <string name="default_watch_face_package" translatable="false">com.google.android.clockwork.complications.watchfaces.digital</string>
+
+    <!-- This is the class name for the default watch face. -->
+    <string name="default_watch_face_class" translatable="false">com.google.android.clockwork.complications.watchfaces.digital.DigitalWatchFaceService</string>
+</resources>

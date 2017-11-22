@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+    <!-- DO NOT TRANSLATE Because we don't have a settings UI to change this pref, leave this empty so nothing shows up in the UI. -->
+    <string name="sms_short_code_remember_undo_instruction"></string>
+</resources>

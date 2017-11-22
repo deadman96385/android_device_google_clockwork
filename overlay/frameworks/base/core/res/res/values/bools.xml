@@ -1,0 +1,9 @@
+<resources>
+
+    <!-- Disable use of an ongoing notification for input method switching.
+         The notification cannot be accessed from outside of home. It's
+         removed as soon as the IME is dismissed and so is impossible to
+         access. -->
+    <bool name="show_ongoing_ime_switcher">false</bool>
+
+</resources>

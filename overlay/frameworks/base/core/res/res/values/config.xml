@@ -1,0 +1,252 @@
+<resources>
+
+    <!-- Sets the package names whose certificates should be used to
+         verify location providers are allowed to be loaded. -->
+    <string-array name="config_locationProviderPackageNames" translatable="false">
+        <item>com.google.android.gms</item>
+        <item>com.android.location.fused</item>
+    </string-array>
+
+    <!-- This device is not "voice capable"; it's data-only. -->
+    <bool name="config_voice_capable">true</bool>
+
+    <!-- We require call capable accounts for each handle type. -->
+    <bool name="config_requireCallCapableAccountForHandle">true</bool>
+
+    <!-- This device does not allow sms service. -->
+    <bool name="config_sms_capable">false</bool>
+
+    <!-- Ensure WallpaperService is enabled -->
+    <bool name="config_enableWallpaperService">true</bool>
+
+    <!-- Ovverride the default ResolverActivity with a version suitable for a
+         wearable device. -->
+    <string name="config_customResolverActivity" translatable="false">com.google.android.apps.wearable.settings/com.google.android.apps.wearable.resolver.ResolverActivity</string>
+
+    <!-- Override the VPN activity with a stub to pass CTS -->
+    <string name="config_customVpnConfirmDialogComponent" translatable="false">com.google.android.wearable.frameworkpackagestubs/com.google.android.wearable.frameworkpackagestubs.Stubs$VpnStub</string>
+
+    <!-- List of regexpressions describing the interface (if any) that represent tetherable
+         bluetooth interfaces.  If the device doesn't want to support tethering over bluetooth this
+         should be empty. -->
+    <string-array translatable="false" name="config_tether_bluetooth_regexs">
+           <item>"bt-pan"</item>
+    </string-array>
+
+    <string-array translatable="false" name="networkAttributes">
+        <item>"wifi,1,1,1,-1,true"</item>
+        <item>"bluetooth,7,7,2,-1,true"</item>
+        <item>"proxy,16,16,1,-1,true"</item>
+    </string-array>
+
+    <string-array translatable="false" name="radioAttributes">
+        <item>"7,1"</item>
+        <item>"16,1"</item>
+    </string-array>
+
+    <!-- Dreams disabled in favor of dozing -->
+    <bool name="config_dreamsSupported">false</bool>
+
+    <!-- ComponentName of a dream to show whenever the system would otherwise have
+         gone to sleep.  When the PowerManager is asked to go to sleep, it will instead
+         try to start this dream if possible.  The dream should typically call startDozing()
+         to put the display into a low power state and allow the application processor
+         to be suspended.  When the dream ends, the system will go to sleep as usual.
+         Specify the component name (Settings.Secure.SCREENSAVER_COMPONENT) or an
+         empty string if none.
+
+         Note that doze dreams are not subject to the same start conditions as ordinary dreams.
+         Doze dreams will run whenever the power manager is in a dozing state. -->
+    <string name="config_dozeComponent" translatable="false">com.google.android.wearable.ambient/com.google.android.wearable.ambient.AmbientDream</string>
+
+    <!-- Indicate whether to allow the device to suspend when the screen is off
+         due to the proximity sensor.  This resource should only be set to true
+         if the sensor HAL correctly handles the proximity sensor as a wake-up source.
+         Otherwise, the device may fail to wake out of suspend reliably.
+         The default is false. -->
+    <bool name="config_suspendWhenScreenOffDueToProximity">true</bool>
+
+    <!-- Power Management: Specifies whether to decouple the auto-suspend state of the
+         device from the display on/off state.
+
+         When false, autosuspend_disable() will be called before the display is turned on
+         and autosuspend_enable() will be called after the display is turned off.
+         This mode provides best compatibility for devices using legacy power management
+         features such as early suspend / late resume.
+
+         When true, autosuspend_display() and autosuspend_enable() will be called
+         independently of whether the display is being turned on or off.  This mode
+         enables the power manager to suspend the application processor while the
+         display is on.
+
+         This resource should be set to "true" when a doze component has been specified
+         to maximize power savings but not all devices support it.
+
+         Refer to autosuspend.h for details.
+
+         We override default behavior because clockwork is different from other devices
+         in that it supports ambient mode where we want the AP to be allowed to be
+         autosuspended by the kernel regardless of the fact that the screen is still on.
+    -->
+    <bool name="config_powerDecoupleAutoSuspendModeFromDisplay">true</bool>
+
+    <!-- Power Management: Specifies whether to decouple the interactive state of the
+         device from the display on/off state.
+
+         When false, setInteractive(..., true) will be called before the display is turned on
+         and setInteractive(..., false) will be called after the display is turned off.
+         This mode provides best compatibility for devices that expect the interactive
+         state to be tied to the display state.
+
+         When true, setInteractive(...) will be called independently of whether the display
+         is being turned on or off.  This mode enables the power manager to reduce
+         clocks and disable the touch controller while the display is on.
+
+         This resource should be set to "true" when a doze component has been specified
+         to maximize power savings but not all devices support it.
+
+         Refer to power.h for details.
+
+         We override default behavior because clockwork is different from other devices
+         in that it supports ambient mode where we want to be able to transition in and
+         out of interactive mode regardless of the fact that the screen is still on.
+    -->
+    <bool name="config_powerDecoupleInteractiveModeFromDisplay">true</bool>
+
+    <!-- If this is true, allow wake from theater mode from power key press. -->
+    <bool name="config_allowTheaterModeWakeFromPowerKey">true</bool>
+
+    <!-- If this is true, allow wake from theater mode from regular key press. Setting this value to
+         true implies config_allowTheaterModeWakeFromPowerKey is also true-->
+    <bool name="config_allowTheaterModeWakeFromKey">true</bool>
+
+    <!-- If true, enables auto-rotation features using the accelerometer.
+         Otherwise, auto-rotation is disabled.  Applications may still request
+         to use specific orientations but the sensor is ignored and sensor-based
+         orientations are not available.  Furthermore, all auto-rotation related
+         settings are omitted from the system UI.  In certain situations we may
+         still use the accelerometer to determine the orientation, such as when
+         docked if the dock is configured to enable the accelerometer. -->
+    <bool name="config_supportAutoRotation">true</bool>
+
+    <!-- This device does not have a recents screen -->
+    <bool name="config_hasRecents">false</bool>
+
+    <!-- Name of the component that trigger a prompt for the user to reject, accept, or whitelist
+         an adb host's public key, when an unwhitelisted host connects to the local adbd. -->
+    <string name="config_customAdbPublicKeyConfirmationComponent" translatable="false"
+            >com.google.android.apps.wearable.settings/com.google.android.clockwork.settings.SecureAdbActivity</string>
+
+    <integer name="config_minimumScreenOffTimeout">5000</integer>
+    <integer name="config_maximumScreenDimDuration">1000</integer>
+    <fraction name="config_maximumScreenDimRatio">10%</fraction>
+
+    <!-- Number of notifications to keep in the notification service historical archive.
+         Reduced intentionally for watches to retain minimal memory footprint -->
+    <integer name="config_notificationServiceArchiveSize">1</integer>
+
+    <!-- Make ConnectivityService sample the network only when the device is
+         already awake for some other reason. -->
+    <bool name="config_networkSamplingWakesDevice">false</bool>
+
+    <!-- Component name of the built in wallpaper used to display bitmap wallpapers. This must not be null. -->
+    <string name="image_wallpaper_component" translatable="false">com.google.android.wearable.app/.DefaultWatchFace</string>
+
+    <!-- Double power button tap: Do nothing. -->
+    <integer name="config_doublePressOnPowerBehavior">0</integer>
+
+    <!-- Disable sleep on power button theater mode entry -->
+    <bool name="config_goToSleepOnButtonPressTheaterMode">false</bool>
+
+    <!-- Triple power button tap: Do nothing. -->
+    <integer name="config_triplePressOnPowerBehavior">0</integer>
+
+    <!-- Single button tap: close ime or go home. -->
+    <integer name="config_shortPressOnPowerBehavior">5</integer>
+
+    <!-- Allow long press from non-interactive. -->
+    <bool name="config_supportLongPressPowerWhenNonInteractive">true</bool>
+
+    <!-- Control the behavior when the user long presses the back button.  Non-zero values are only
+         valid for watches as part of CDD/CTS.
+            0 - Nothing
+            1 - Go to voice assist
+    -->
+    <integer name="config_longPressOnBackBehavior">1</integer>
+
+    <!-- Control the behavior when the user panic presses the back button.
+            0 - Nothing
+            1 - Go to home
+    -->
+    <integer name="config_backPanicBehavior">1</integer>
+
+    <!-- Keyguard component -->
+    <string name="config_keyguardComponent" translatable="false">com.google.android.apps.wearable.systemui/com.google.android.clockwork.systemui.keyguard.KeyguardService</string>
+
+    <!-- Disable network location provider -->
+    <bool name="config_enableNetworkLocationOverlay" translatable="false">false</bool>
+
+    <!-- Integer indicating wpa_supplicant scan interval in milliseconds -->
+    <integer translatable="false" name="config_wifi_supplicant_scan_interval">31000</integer>
+
+    <!-- Integer indicating disconnect mode scan interval in milliseconds -->
+    <integer translatable="false" name="config_wifi_disconnected_short_scan_interval">31000</integer>
+
+    <!-- Enable animations during low power mode -->
+    <bool name="config_allowAnimationsInLowPowerMode">true</bool>
+
+    <!-- Enable device idle mode -->
+    <bool name="config_enableAutoPowerModes">true</bool>
+
+    <!-- All our devices have a wrist tilt sensor, prefer that over the SMD. -->
+    <bool name="config_autoPowerModePreferWristTilt">true</bool>
+
+    <!-- If a location should be pre-fetched when going into device idle. -->
+    <bool name="config_autoPowerModePrefetchLocation">false</bool>
+
+    <!-- The threshold angle for any motion detection in auto-power save modes.
+         In hundreths of a degree. -->
+    <integer name="config_autoPowerModeThresholdAngle">10</integer>
+
+    <!-- Set lowmemorykiller threshold -->
+    <integer name="config_lowMemoryKillerMinFreeKbytesAbsolute">65536</integer>
+
+    <!-- Set direct background reclaim threshold -->
+    <integer name="config_extraFreeKbytesAbsolute">4800</integer>
+
+    <!-- How long history of previous vibrations should be kept for the dumpsys. -->
+    <integer name="config_previousVibrationsDumpLimit">100</integer>
+
+    <!-- If the device should still vibrate even in low power mode, for certain priority vibrations
+     (e.g. accessibility, alarms). This is mainly for Wear devices that don't have speakers. -->
+    <add-resource type="bool" name="config_allowPriorityVibrationsInLowPowerMode">true</add-resource> 
+
+    <!-- Do not allow the gesture to double tap the power button twice
+         to start the camera while the device is non-interactive. -->
+    <bool name="config_cameraDoubleTapPowerGestureEnabled">false</bool>
+
+    <!-- The component to handle network policy notifications -->
+    <string translatable="false" name="config_networkPolicyNotificationComponent">com.google.android.apps.wearable.settings/com.google.android.clockwork.settings.NetworkPolicyNotificationReceiver</string>
+
+    <!-- Name of the package allowed by PersistentDataBlockService -->
+    <string translatable="false" name="config_persistentDataPackageName">com.google.android.gms</string>
+
+    <string translatable="false" name="config_iccHotswapPromptForRestartDialogComponent">com.google.android.apps.wearable.settings/com.google.android.clockwork.settings.cellular.IccHotswapPromptForRestartDialog</string>
+
+    <!-- Boolean indicating associated network selection is allowed -->
+    <bool translatable="false" name="config_wifi_framework_enable_associated_network_selection">false</bool>
+
+    <string translatable="false" name="config_networkOverLimitComponent">com.google.android.apps.wearable.settings/com.google.android.clockwork.settings.cellular.DataUsageActivity</string>
+    <string translatable="false" name="config_dataUsageSummaryComponent">com.google.android.apps.wearable.settings/com.google.android.clockwork.settings.cellular.DataUsageActivity</string>
+
+    <!-- Fast brightness animation ramp rate -->
+    <integer translatable="false" name="config_brightness_ramp_rate_fast">400</integer>
+
+    <!-- Slow brightness animation ramp rate -->
+    <integer translatable="false" name="config_brightness_ramp_rate_slow">400</integer>
+
+    <!-- Vibrator pattern for feedback about a long screen/key press.
+         Empty because we do not want vibration on long press. -->
+    <integer-array name="config_longPressVibePattern">
+    </integer-array>
+</resources>

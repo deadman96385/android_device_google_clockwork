@@ -1,0 +1,6 @@
+set_prop(system_server, clockwork_log_prop)
+allow system_server sysproxyd:unix_stream_socket { connectto getattr read write };
+
+# Write to /data/system/time
+allow system_server system_time_data_file:dir { rw_dir_perms setattr };
+allow system_server system_time_data_file:file { rw_file_perms  setattr };

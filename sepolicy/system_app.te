@@ -1,0 +1,3 @@
+allow system_app ctl_adbd_prop:property_service set;
+allow system_app shell_prop:property_service set;
+allow system_app sysproxyd:unix_stream_socket { connectto getattr read write };

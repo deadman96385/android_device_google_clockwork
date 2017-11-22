@@ -1,0 +1,2 @@
+allow platform_app WearDisplayService_service:service_manager find;
+allow platform_app WearLeftyService_service:service_manager find;
