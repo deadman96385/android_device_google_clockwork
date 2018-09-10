@@ -27,7 +27,7 @@ include $(LOCAL_PATH)/clockwork_proprietary_apps.mk
 
 DEVICE_PACKAGE_OVERLAYS := device/google/clockwork/overlay
 
-BOARD_PLAT_PRIVATE_SEPOLICY_DIR := device/google/clockwork/sepolicy
+#BOARD_PLAT_PRIVATE_SEPOLICY_DIR := device/google/clockwork/sepolicy
 
 # HACK : The current GmsCore doesn't have an intent verifier, so we use the AOSP one
 # for the time being. b/27336841 b/27442095
